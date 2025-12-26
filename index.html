@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Year Surprise 🎆</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 360px;
+    padding: 20px;
+    z-index: 2;
+  }
+
+  .step {
+    display: none;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .step.active {
+    display: block;
+  }
+
+  h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-line;
+    margin-bottom: 25px;
+  }
+
+  button {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #ff7eb3;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  button:hover {
+    transform: scale(1.08);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 18px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    animation: fall 3s linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- PAGE 1 -->
+  <div class="step active">
+    <h1>🎆 Hey Armaan</h1>
+    <p>
+Before the New Year begins…
+I have something special for you ✨
+    </p>
+    <button onclick="nextStep()">Tap to continue</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="step">
+    <h1>⏳ Almost there</h1>
+    <p>
+Pause for a second…
+and read this with your heart 💙
+    </p>
+    <button onclick="nextStep()">One last step</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="step">
+    <h1>🎉 Happy New Year, Armaan 🎆✨</h1>
+    <p id="typewriter"></p>
+  </div>
+
+</div>
+
+<script>
+  /* Step navigation */
+  let current = 0;
+  const steps = document.querySelectorAll('.step');
+
+  function nextStep() {
+    steps[current].classList.remove('active');
+    current++;
+    steps[current].classList.add('active');
+
+    if (current === 2) {
+      launchConfetti();
+      startTypewriter();
+    }
+  }
+
+  /* Message */
+  const message =
+`The last year was full of chaos,
+but it also gave us some really beautiful memories.
+
+The chit-chats, the gossips, the endless talks —
+I hope the new year brings more moments like these.
+
+And somewhere between all of it,
+I realised something important.
+
+I wanted to ask you a question…
+
+Will you start this new year with me —
+not just as a friend,
+but as a special part of my life? 💫
+
+You can answer yes or no on call. ☎️💙`;
+
+  let i = 0;
+  function startTypewriter() {
+    const el = document.getElementById("typewriter");
+    const interval = setInterval(() => {
+      el.textContent += message.charAt(i);
+      i++;
+      if (i >= message.length) clearInterval(interval);
+    }, 35);
+  }
+
+  /* Confetti */
+  function launchConfetti() {
+    for (let i = 0; i < 90; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor =
+        ["#ff7eb3", "#ffd36e", "#7afcff", "#c77dff"][Math.floor(Math.random()*4)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 3000);
+    }
+  }
+
+  /* Floating hearts */
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.textContent = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }
+  setInterval(createHeart, 600);
+</script>
+
+</body>
+</html>
